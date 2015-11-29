@@ -1,3 +1,6 @@
+# CLion project settings
+.idea
+
 # Compiled Object files
 *.slo
 *.lo

@@ -1,0 +1,110 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'D:\Code\renderer\qt\main_window.ui'
+#
+# Created by: PyQt5 UI code generator 5.5.1
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(1280, 720)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
+        self.scene_viewer = QtWidgets.QOpenGLWidget(self.centralwidget)
+        self.scene_viewer.setObjectName("scene_viewer")
+        self.gridLayout.addWidget(self.scene_viewer, 0, 0, 1, 1)
+        self.render_preview = QtWidgets.QOpenGLWidget(self.centralwidget)
+        self.render_preview.setObjectName("render_preview")
+        self.gridLayout.addWidget(self.render_preview, 0, 1, 1, 1)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 21))
+        self.menubar.setObjectName("menubar")
+        self.menuView = QtWidgets.QMenu(self.menubar)
+        self.menuView.setObjectName("menuView")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuExport = QtWidgets.QMenu(self.menuFile)
+        self.menuExport.setObjectName("menuExport")
+        self.menuImport = QtWidgets.QMenu(self.menuFile)
+        self.menuImport.setObjectName("menuImport")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.console_dock = QtWidgets.QDockWidget(MainWindow)
+        self.console_dock.setMinimumSize(QtCore.QSize(600, 200))
+        self.console_dock.setFloating(False)
+        self.console_dock.setObjectName("console_dock")
+        self.console_dock_contents = QtWidgets.QWidget()
+        self.console_dock_contents.setObjectName("console_dock_contents")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.console_dock_contents)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.console_widget = QtWidgets.QWidget(self.console_dock_contents)
+        self.console_widget.setObjectName("console_widget")
+        self.gridLayout_2.addWidget(self.console_widget, 0, 0, 1, 1)
+        self.console_dock.setWidget(self.console_dock_contents)
+        MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(8), self.console_dock)
+        self.actionConsole = QtWidgets.QAction(MainWindow)
+        self.actionConsole.setCheckable(True)
+        self.actionConsole.setObjectName("actionConsole")
+        self.actionScene = QtWidgets.QAction(MainWindow)
+        self.actionScene.setCheckable(True)
+        self.actionScene.setObjectName("actionScene")
+        self.actionRender = QtWidgets.QAction(MainWindow)
+        self.actionRender.setCheckable(True)
+        self.actionRender.setObjectName("actionRender")
+        self.actionQuit = QtWidgets.QAction(MainWindow)
+        self.actionQuit.setObjectName("actionQuit")
+        self.actionTo_PNG = QtWidgets.QAction(MainWindow)
+        self.actionTo_PNG.setObjectName("actionTo_PNG")
+        self.actionAlembic = QtWidgets.QAction(MainWindow)
+        self.actionAlembic.setObjectName("actionAlembic")
+        self.menuView.addAction(self.actionConsole)
+        self.menuView.addSeparator()
+        self.menuView.addAction(self.actionRender)
+        self.menuView.addAction(self.actionScene)
+        self.menuExport.addAction(self.actionTo_PNG)
+        self.menuImport.addAction(self.actionAlembic)
+        self.menuFile.addAction(self.menuImport.menuAction())
+        self.menuFile.addAction(self.menuExport.menuAction())
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionQuit)
+        self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuView.menuAction())
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.menuView.setTitle(_translate("MainWindow", "View"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.menuExport.setTitle(_translate("MainWindow", "Export"))
+        self.menuImport.setTitle(_translate("MainWindow", "Import"))
+        self.console_dock.setWindowTitle(_translate("MainWindow", "Console"))
+        self.actionConsole.setText(_translate("MainWindow", "Console"))
+        self.actionScene.setText(_translate("MainWindow", "Scene View"))
+        self.actionRender.setText(_translate("MainWindow", "Render View"))
+        self.actionQuit.setText(_translate("MainWindow", "Quit"))
+        self.actionQuit.setShortcut(_translate("MainWindow", "Esc"))
+        self.actionTo_PNG.setText(_translate("MainWindow", "To PNG..."))
+        self.actionAlembic.setText(_translate("MainWindow", "Alembic..."))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+
