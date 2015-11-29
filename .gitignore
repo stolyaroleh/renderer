@@ -29,3 +29,8 @@
 *.exe
 *.out
 *.app
+
+# Python
+__pycache__/
+*.py[co]
+*$py.class
