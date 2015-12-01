@@ -1,6 +1,10 @@
+[submodule "pybind11"]
+	path = libs/pybind11
+	url = https://github.com/wjakob/pybind11
+
+[submodule "pbrt-v3"]
+	path = src/cpp/pbrt-v3
+	url = https://github.com/mmp/pbrt-v3
 [submodule "libs/pybind11"]
 	path = libs/pybind11
 	url = https://github.com/wjakob/pybind11
-[submodule "src/cpp/pbrt-v3"]
-	path = src/cpp/pbrt-v3
-	url = https://github.com/mmp/pbrt-v3
