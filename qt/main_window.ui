@@ -16,10 +16,10 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QOpenGLWidget" name="scene_viewer"/>
+     <widget class="QOpenGLWidget" name="scene_view"/>
     </item>
     <item row="0" column="1">
-     <widget class="QOpenGLWidget" name="render_preview"/>
+     <widget class="QOpenGLWidget" name="render_view"/>
     </item>
    </layout>
   </widget>
@@ -36,10 +36,10 @@
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionConsole"/>
+    <addaction name="action_console"/>
     <addaction name="separator"/>
-    <addaction name="actionRender"/>
-    <addaction name="actionScene"/>
+    <addaction name="action_render_view"/>
+    <addaction name="action_scene_view"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -60,7 +60,7 @@
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>
-    <addaction name="actionQuit"/>
+    <addaction name="action_quit"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -82,39 +82,51 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="console_dock_contents">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QWidget" name="console_widget" native="true"/>
-     </item>
-    </layout>
-   </widget>
+   <widget class="QWidget" name="console_dock_contents"/>
   </widget>
-  <action name="actionConsole">
+  <action name="action_console">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Console</string>
    </property>
+   <property name="shortcut">
+    <string>C</string>
+   </property>
   </action>
-  <action name="actionScene">
+  <action name="action_scene_view">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Scene View</string>
    </property>
+   <property name="shortcut">
+    <string>1</string>
+   </property>
   </action>
-  <action name="actionRender">
+  <action name="action_render_view">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Render View</string>
    </property>
+   <property name="shortcut">
+    <string>2</string>
+   </property>
   </action>
-  <action name="actionQuit">
+  <action name="action_quit">
    <property name="text">
     <string>Quit</string>
    </property>
