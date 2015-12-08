@@ -15,11 +15,11 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QOpenGLWidget" name="scene_view"/>
-    </item>
     <item row="0" column="1">
-     <widget class="QOpenGLWidget" name="render_view"/>
+     <widget class="QWidget" name="render_view_widget" native="true"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QWidget" name="scene_view_widget" native="true"/>
     </item>
    </layout>
   </widget>
@@ -38,8 +38,10 @@
     </property>
     <addaction name="action_console"/>
     <addaction name="separator"/>
-    <addaction name="action_render_view"/>
     <addaction name="action_scene_view"/>
+    <addaction name="action_render_view"/>
+    <addaction name="separator"/>
+    <addaction name="action_toggle_fullscreen"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -109,7 +111,7 @@
     <string>Scene View</string>
    </property>
    <property name="shortcut">
-    <string>1</string>
+    <string>2</string>
    </property>
   </action>
   <action name="action_render_view">
@@ -123,7 +125,7 @@
     <string>Render View</string>
    </property>
    <property name="shortcut">
-    <string>2</string>
+    <string>1</string>
    </property>
   </action>
   <action name="action_quit">
@@ -142,6 +144,17 @@
   <action name="actionAlembic">
    <property name="text">
     <string>Alembic...</string>
+   </property>
+  </action>
+  <action name="action_toggle_fullscreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toggle Fullscreen</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Return</string>
    </property>
   </action>
  </widget>
