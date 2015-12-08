@@ -3,4 +3,4 @@
 	url = https://github.com/wjakob/pybind11
 [submodule "pbrt-v3"]
 	path = pbrt-v3
-	url = https://github.com/stolyaroleh/pbrt-v3
+	url = https://github.com/stolyaroleh/pbrt-v3.git
