@@ -17,11 +17,8 @@ class Ui_SceneViewWidget(object):
         self.gridLayout.setObjectName("gridLayout")
         self.groupBox = QtWidgets.QGroupBox(SceneViewWidget)
         self.groupBox.setObjectName("groupBox")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.gl_widget = QtWidgets.QOpenGLWidget(self.groupBox)
-        self.gl_widget.setObjectName("gl_widget")
-        self.gridLayout_2.addWidget(self.gl_widget, 0, 0, 1, 1)
+        self.groupBoxLayout = QtWidgets.QGridLayout(self.groupBox)
+        self.groupBoxLayout.setObjectName("groupBoxLayout")
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
 
         self.retranslateUi(SceneViewWidget)
