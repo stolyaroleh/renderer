@@ -19,6 +19,8 @@ class SceneViewWidget(QtWidgets.QWidget):
         self.gl.glNewList(genList, self.gl.GL_COMPILE)
 
 
+
+
 if __name__ == '__main__':
     import sys
     from PyQt5.QtWidgets import QApplication
