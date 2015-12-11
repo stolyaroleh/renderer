@@ -9,4 +9,3 @@ def from_spherical(r, theta, phi):
 
 def from_spherical_deg(r, theta, phi):
     return from_spherical(r, radians(theta), radians(phi))
-
