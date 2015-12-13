@@ -22,7 +22,7 @@ vertex_shaded = \
     '''
     #version 120
     attribute vec3 vertex_pos_model_space;
-        attribute vec3 vertex_normal_model_space;
+    attribute vec3 vertex_normal_model_space;
 
     varying vec3 pos_world_space;
     varying vec3 normal_camera_space;
@@ -36,14 +36,13 @@ vertex_shaded = \
 
     void main() {
 
-        // Output position of the vertex, in clip space : MVP * position
-        gl_Position =  MVP * vec4(vertex_pos_model_space, 1.0);
+        gl_Position =  vec4(vertex_pos_model_space, 1.0) * MVP;
 
         // Position of the vertex, in worldspace : M * position
         pos_world_space = (M * vec4(vertex_pos_model_space, 1)).xyz;
 
         // Vector that goes from the vertex to the camera, in camera space.
-        // In camera space, the camera is at the origin (0,0,0).
+        // In camera space, the camera is at the origin (0, 0, 0).
         vec3 vertex_pos_camera_space = (V * M * vec4(vertex_pos_model_space, 1.0)).xyz;
         eye_direction_camera_space = vec3(0.0, 0.0, 0.0) - vertex_pos_camera_space;
 
@@ -52,7 +51,7 @@ vertex_shaded = \
         light_direction_camera_space = light_pos_camera_space + eye_direction_camera_space;
 
         // Normal of the the vertex, in camera space
-        normal_camera_space = (V * M * vec4(vertex_normal_model_space, 0.0)).xyz; // Only correct if ModelMatrix does not scale the model ! Use its inverse transpose if not.
+        normal_camera_space = (V * M * vec4(vertex_normal_model_space, 0.0)).xyz;
     }
     '''
 
@@ -69,13 +68,14 @@ fragment_shaded = \
     // Values that stay constant for the whole mesh.
     uniform vec3 color;
     uniform vec3 light_pos_world_space;
+    uniform float light_intensity;
 
     void main() {
 
         // Light emission properties
         // You probably want to put them as uniforms
         vec3 LightColor = vec3(1, 1, 1);
-        float LightPower = 100.0f;
+        float LightPower = light_intensity;
 
         // Material properties
         vec3 MaterialDiffuseColor = color;

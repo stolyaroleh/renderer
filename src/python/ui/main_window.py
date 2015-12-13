@@ -2,8 +2,10 @@ from ui_generated.main_window_ui import Ui_MainWindow
 from ui.console_widget import ConsoleWidget
 from ui.render_view import RenderViewWidget
 from ui.scene_view import SceneViewWidget
+from core.scene import SceneDescription
 
 from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QFileDialog
 
 
 class MainWindow(Ui_MainWindow):
@@ -20,7 +22,8 @@ class MainWindow(Ui_MainWindow):
                                          QColor(255, 220, 30),
                                          QColor(255, 0, 0))
 
-        self.scene_view = SceneViewWidget(self.parent)
+        self.scene = SceneDescription()
+        self.scene_view = SceneViewWidget(self.parent, self.scene)
 
     def initialize(self):
         self.gridLayout.addWidget(self.scene_view)
@@ -33,6 +36,8 @@ class MainWindow(Ui_MainWindow):
         self.action_scene_view.triggered.connect(self.toggle_scene_view)
         self.action_toggle_fullscreen.triggered.connect(self.toggle_fullscreen)
         self.action_quit.triggered.connect(self.close)
+
+        self.action_obj.triggered.connect(self.import_obj)
 
         self.centralwidget.addAction(self.action_console)
         self.centralwidget.addAction(self.action_render_view)
@@ -57,6 +62,16 @@ class MainWindow(Ui_MainWindow):
         else:
             self.parent.showNormal()
             self.parent.menuBar().show()
+
+    def import_obj(self):
+        filename, _ = QFileDialog.getOpenFileName(self.parent, 'Import .obj', r'w:\Renderer\obj', '.obj (*.obj)')
+        if not filename[0]:
+            return
+
+        print('Loading...  {0}'.format(filename))
+        self.scene.import_mesh(filename)
+        self.scene_view.update_list()
+        self.scene_view.refresh()
 
     def close(self):
         self.parent.close()

@@ -44,13 +44,13 @@
      <property name="title">
       <string>Export</string>
      </property>
-     <addaction name="actionTo_PNG"/>
+     <addaction name="action_render"/>
     </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
       <string>Import</string>
      </property>
-     <addaction name="actionAlembic"/>
+     <addaction name="action_obj"/>
     </widget>
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
@@ -129,14 +129,23 @@
     <string>Esc</string>
    </property>
   </action>
-  <action name="actionTo_PNG">
+  <action name="action_render">
    <property name="text">
     <string>To PNG...</string>
    </property>
+   <property name="toolTip">
+    <string>render</string>
+   </property>
   </action>
-  <action name="actionAlembic">
+  <action name="action_obj">
    <property name="text">
-    <string>Alembic...</string>
+    <string>Wavefront .obj</string>
+   </property>
+   <property name="toolTip">
+    <string>.obj</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
   <action name="action_toggle_fullscreen">
