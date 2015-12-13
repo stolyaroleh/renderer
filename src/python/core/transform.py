@@ -83,14 +83,12 @@ def look_at(ex, ey, ez, tx, ty, tz, ux, uy, uz):
     target = np.array([tx, ty, tz])
     up = np.array([ux, uy, uz])
 
-    zaxis = normalized(eye - target)
-    xaxis = normalized(np.cross(up, zaxis))
-    yaxis = np.cross(zaxis, xaxis)
+    f = normalized(eye - target)
+    u = normalized(up)
+    s = normalized(np.cross(f, u))
+    u = np.cross(s, f)
 
-    orientation = np.array([[xaxis[0], xaxis[1], xaxis[2], 0],
-                            [yaxis[0], yaxis[1], yaxis[2], 0],
-                            [zaxis[0], zaxis[1], zaxis[2], 0],
-                            [0, 0, 0, 1]], 'f')
-
-    translation = translate(-ex, -ey, -ez)
-    return orientation * translation
+    return np.array([[s[0], u[0], -f[0], -np.dot(s, eye)],
+                     [s[1], u[1], -f[1], -np.dot(u, eye)],
+                     [s[2], u[2], -f[2], -np.dot(f, eye)],
+                     [0, 0, 0, 1]], 'f')

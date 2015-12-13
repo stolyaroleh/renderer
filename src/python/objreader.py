@@ -8,11 +8,12 @@ def read_obj(filename):
         print('File does not exist: {0}'.format(filename))
         return None
 
-    vertices = []
+    # indeces start from 1; this will never be used
+    vertices = [0, 0, 0]
     indices = []
-    uvs = []
+    uvs = [0, 0]
     uv_indices = []
-    normals = []
+    normals = [0, 0, 0]
     normal_indices = []
 
     def v(args):
@@ -26,32 +27,25 @@ def read_obj(filename):
 
     def f(args):
         for a in args.split():
-            i = [int(x) or None for x in a.split('/')]
+            i = [int(x) or 0 for x in a.split('/')] + [0, 0]
             indices.append(i[0])
-            if len(i) == 2 and i[1]:
-                uv_indices.append(i)
-            if len(i) == 3 and i[2]:
-                normal_indices.append(i[2])
+            uv_indices.append(i[1])
+            normal_indices.append(i[2])
 
     actions = {'v': v,
                'vt': vt,
                'vn': vn,
-               'vp': lambda x: None,
-               'f': f,
-               '#': lambda x: None
-               }
+               'f': f}
 
     with open(filename) as file:
         for tokens in map(lambda x: x.strip().split(' ', 1), file):
             if len(tokens) < 2:
                 continue
             action, args = tokens[0], tokens[1]
-            if action in actions:
-                actions[action](args)
+            actions.get(action, lambda x: None)(args)
 
     if vertices and indices:
         return Mesh(filename, vertices, indices,
-                    normals or None,
-                    normal_indices or None)
+                    normals, normal_indices)
 
     return None
