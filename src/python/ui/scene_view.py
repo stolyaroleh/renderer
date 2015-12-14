@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets
 
 from core.pbrt_export import render
 
+
 class SceneViewWidget(QtWidgets.QWidget):
     def __init__(self, parent, main_window, scene):
         super().__init__(parent)
@@ -33,6 +34,7 @@ class SceneViewWidget(QtWidgets.QWidget):
 
         self.ui.meshes_list.itemClicked.connect(self.update_transform_fields)
         self.ui.render_btn.clicked.connect(self.render)
+        self.ui.delete_btn.clicked.connect(self.delete_mesh)
 
         self.update_light()
 
@@ -91,15 +93,15 @@ class SceneViewWidget(QtWidgets.QWidget):
 
     def refresh(self):
         self.gl_widget.schedule_buffer_update(self.scene.meshes.values())
+        self.gl_widget.update_buffers()
         self.update_light()
         self.update_list()
-        self.gl_widget.update()
 
     def render(self):
-        light_pos = self.gl_widget.light_pos
+        camera_pos = self.gl_widget.camera_pos
         intensity = self.gl_widget.light_intensity
         filename = self.ui.filename.text() or 'output'
-        render(filename, (self.gl_widget.width, self.gl_widget.height), self.scene.meshes, light_pos, intensity)
+        render(filename, (self.gl_widget.width, self.gl_widget.height), self.scene.meshes, camera_pos, intensity)
         self.main_window.load_png(filename + '.png')
 
 

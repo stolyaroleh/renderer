@@ -40,12 +40,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuExport">
-     <property name="title">
-      <string>Export</string>
-     </property>
-     <addaction name="action_render"/>
-    </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
       <string>Import</string>
@@ -53,7 +47,6 @@
      <addaction name="action_obj"/>
     </widget>
     <addaction name="menuImport"/>
-    <addaction name="menuExport"/>
     <addaction name="separator"/>
     <addaction name="action_quit"/>
    </widget>
@@ -127,14 +120,6 @@
    </property>
    <property name="shortcut">
     <string>Esc</string>
-   </property>
-  </action>
-  <action name="action_render">
-   <property name="text">
-    <string>To PNG...</string>
-   </property>
-   <property name="toolTip">
-    <string>render</string>
    </property>
   </action>
   <action name="action_obj">

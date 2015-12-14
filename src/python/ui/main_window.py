@@ -29,7 +29,7 @@ class MainWindow(Ui_MainWindow):
 
     def initialize(self):
         self.gridLayout.addWidget(self.scene_view)
-        self.gridLayout.addWidget(self.render_view_widget)
+        self.gridLayout.addWidget(self.render_view_widget, 0, 1)
 
         self.render_view.setupUi(self.render_view_widget)
 
@@ -49,6 +49,10 @@ class MainWindow(Ui_MainWindow):
         self.centralwidget.addAction(self.action_scene_view)
         self.centralwidget.addAction(self.action_toggle_fullscreen)
         self.centralwidget.addAction(self.action_quit)
+        self.centralwidget.addAction(self.action_obj)
+
+        self.action_render_view.setChecked(False)
+        self.toggle_render_view()
 
     def toggle_log(self):
         self.console_dock.setVisible(self.action_console.isChecked())
@@ -70,7 +74,7 @@ class MainWindow(Ui_MainWindow):
 
     def import_obj(self):
         filename, _ = QFileDialog.getOpenFileName(self.parent, 'Import .obj', r'w:\Renderer\obj', '.obj (*.obj)')
-        if not filename[0]:
+        if not filename:
             return
 
         print('Loading...  {0}'.format(filename))
@@ -79,6 +83,8 @@ class MainWindow(Ui_MainWindow):
         self.scene_view.refresh()
 
     def load_png(self, filename):
+        self.action_scene_view.setChecked(False)
+        self.toggle_scene_view()
         self.render_view.show(filename)
 
     def close(self):

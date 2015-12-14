@@ -1,9 +1,9 @@
 import OpenGL
 
-OpenGL.USE_ACCELERATE = False
-OpenGL.ERROR_ON_COPY = True
-OpenGL.ERROR_CHECKING = True
-OpenGL.FULL_LOGGING = True
+OpenGL.USE_ACCELERATE = True
+OpenGL.ERROR_ON_COPY = False
+OpenGL.ERROR_CHECKING = False
+OpenGL.FULL_LOGGING = False
 OpenGL.ARRAY_SIZE_CHECKING = True
 
 import numpy as np
@@ -13,7 +13,6 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import compileProgram, compileShader
 from OpenGL.arrays import vbo
 
-from functools import reduce
 from math import acos, tan, sqrt
 from random import random
 
@@ -27,10 +26,6 @@ IDENTITY = np.array([[1, 0, 0, 0],
                      [0, 1, 0, 0],
                      [0, 0, 1, 0],
                      [0, 0, 0, 1]], dtype=np.float32, order='F').reshape(4, 4)
-
-
-def mmul(*args):
-    return reduce(np.dot, args, IDENTITY.copy())
 
 
 class GLWidget(QOpenGLWidget):
@@ -75,16 +70,24 @@ class GLWidget(QOpenGLWidget):
         self.to_update = meshes
 
     def update_buffers(self):
+        for data, indices, *stuff in self.to_render:
+            try:
+                data.unbind()
+                indices.unbind()
+            except:
+                pass
+
         self.to_render.clear()
         for mesh in self.to_update:
             data = vbo.VBO(mesh.coords, usage=GL_STATIC_DRAW, target=GL_ARRAY_BUFFER)
             indices = vbo.VBO(mesh.indices, usage=GL_STATIC_DRAW, target=GL_ELEMENT_ARRAY_BUFFER)
-            offset = mesh.normal_index_offset
-            model_view_matrix = mesh.transform.matrix
             color = np.array([random(),
                               random(),
                               random()], 'f') * 2
-            self.to_render.append((data, indices, offset, model_view_matrix, color))
+            self.to_render.append((data, indices, mesh, color))
+        self.to_update = []
+        self.compute_view()
+        self.update()
 
     def paintGL(self):
         program = compileProgram(compileShader(vertex_shaded, GL_VERTEX_SHADER),
@@ -106,18 +109,14 @@ class GLWidget(QOpenGLWidget):
         glClearColor(0.2, 0.3, 0.35, 1.0)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        if self.to_update:
-            self.update_buffers()
-            self.to_update = []
-
-        for data, indices, offset, model_matrix, color in self.to_render:
+        for data, indices, mesh, color in self.to_render:
             try:
                 glUseProgram(program)
-                MVP = mmul(self.projection, self.view, model_matrix)
+                MVP = mmul(self.projection, self.view, mesh.transform.get_matrix())
                 glUniformMatrix4fv(MVP_UID, 1, GL_FALSE, MVP)
-                glUniformMatrix4fv(M_UID, 1, GL_FALSE, model_matrix)
+                glUniformMatrix4fv(M_UID, 1, GL_FALSE, mesh.transform.get_matrix())
                 glUniformMatrix4fv(V_UID, 1, GL_FALSE, self.view)
-                glUniform1f(light_intensity_UID, np.single(10 * self.light_intensity))
+                glUniform1f(light_intensity_UID, np.single(30 * self.light_intensity))
                 glUniform3f(color_UID, *color)
                 glUniform3f(light_pos_world_space_UID, *np.array(self.light_pos, 'f'))
                 data.bind()

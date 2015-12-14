@@ -1,9 +1,9 @@
 from pbrt import *
 from subprocess import call
 
-def render(filename, dimensions, meshes, light_pos, light_intensity):
+def render(filename, dimensions, meshes, camera_pos, light_intensity):
     Init()
-    LookAt(light_pos[0], light_pos[1], light_pos[2],
+    LookAt(camera_pos[0], camera_pos[1], camera_pos[2],
            0, 0, 0,
            0, 1, 0)
     p = ParamSet()
@@ -24,13 +24,13 @@ def render(filename, dimensions, meshes, light_pos, light_intensity):
     WorldBegin()
 
     AttributeBegin()
-    CoordSysTransform('camera')
+    CoordSysTransform('world')
     p = ParamSet()
     p.AddRGBSpectrum('L', [float(light_intensity),
                            float(light_intensity),
                            float(light_intensity)])
     p.AddInt('nsamples', [256])
-    p.AddString('mapname', ['grace_latlong.exr'])
+    p.AddString('mapname', ['skylight-sunset.exr'])
     LightSource('infinite', p)
     AttributeEnd()
 

@@ -1,5 +1,9 @@
 import numpy as np
 from math import radians, sin, cos
+from functools import reduce
+
+def mmul(*args):
+    return reduce(np.dot, args, np.identity(4, 'f'))
 
 
 def normalized(vec):
@@ -27,7 +31,7 @@ def rotateX(deg):
     return np.array([[1, 0, 0, 0],
                      [0, cos_a, -sin_a, 0],
                      [0, sin_a,  cos_a, 0],
-                     [0, 0, 0, 1]], dtype=np.float32, order='F').reshape(4, 4)
+                     [0, 0, 0, 1]], dtype=np.float32).reshape(4, 4)
 
 
 def rotateY(deg):
@@ -37,7 +41,7 @@ def rotateY(deg):
     return np.array([[cos_a, 0, sin_a, 0],
                      [0, 1, 0, 0],
                      [-sin_a, 0, cos_a, 0],
-                     [0, 0, 0, 1]], dtype=np.float32, order='F').reshape(4, 4)
+                     [0, 0, 0, 1]], dtype=np.float32).reshape(4, 4)
 
 
 def rotateZ(deg):
@@ -47,7 +51,7 @@ def rotateZ(deg):
     return np.array([[cos_a, -sin_a, 0, 0],
                      [sin_a, cos_a, 0, 0],
                      [0, 0, 1, 0],
-                     [0, 0, 0, 1]], dtype=np.float32, order='F').reshape(4, 4)
+                     [0, 0, 0, 1]], dtype=np.float32).reshape(4, 4)
 
 
 def rotate_axis(deg, axis_x, axis_y, axis_z):
@@ -68,14 +72,14 @@ def rotate_axis(deg, axis_x, axis_y, axis_z):
                       v*w * (1 - cos_a) + u * sin_a,
                       w*w + (u*u + v*v) * cos_a,
                       0],
-                     [0, 0, 0, 1]], dtype=np.float32, order='F').reshape(4, 4)
+                     [0, 0, 0, 1]], dtype=np.float32, order='f').reshape(4, 4)
 
 
 def translate(dx, dy, dz):
     return np.array([[1, 0, 0, dx],
                      [0, 1, 0, dy],
                      [0, 0, 1, dz],
-                     [0, 0, 0, 1]], dtype=np.float32, order='F').reshape(4, 4)
+                     [0, 0, 0, 1]], dtype=np.float32).reshape(4, 4)
 
 
 def look_at(ex, ey, ez, tx, ty, tz, ux, uy, uz):
@@ -95,8 +99,6 @@ def look_at(ex, ey, ez, tx, ty, tz, ux, uy, uz):
 
 class Transform:
     def __init__(self):
-        self.matrix = np.identity(4, 'f')
-
         self.tx = 0.0
         self.ty = 0.0
         self.tz = 0.0
@@ -113,7 +115,8 @@ class Transform:
         self.rz = rz
 
     def get_matrix(self):
-        self.matrix = translate(self.tx, self.ty, self.tz) * \
-                      rotateZ(self.rz) * \
-                      rotateY(self.ry) * \
-                      rotateX(self.rx)
+        from ui.gl_widget import mmul
+        return mmul(translate(self.tx, self.ty, self.tz),
+               rotate_axis(self.rz, 0, 0, 1),
+               rotate_axis(self.ry, 0, 1, 0),
+               rotate_axis(self.rx, 1, 0, 0))
