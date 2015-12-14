@@ -32,8 +32,12 @@
       <string>Render View</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QOpenGLWidget" name="gl_widget"/>
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="image">
+        <property name="text">
+         <string>Image not loaded</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

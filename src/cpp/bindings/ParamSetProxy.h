@@ -16,6 +16,7 @@ class ParamSetProxy {
   void AddPoint3f(const std::string &, std::vector<Float> values);
   void AddVector3f(const std::string &, std::vector<Float> values);
   void AddNormal3f(const std::string &, std::vector<Float> values);
+  void AddRGBSpectrum(const std::string &, std::vector<Float> values);
   void AddString(const std::string &, std::vector<std::string> values);
   void AddTexture(const std::string &, const std::string &);
 

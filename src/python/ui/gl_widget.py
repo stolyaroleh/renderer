@@ -38,7 +38,7 @@ class GLWidget(QOpenGLWidget):
         super().__init__(parent)
         self.parent = parent
 
-        self.orthographic = False
+        self.orthographic = True
 
         self.view = IDENTITY.copy()
         self.projection = IDENTITY.copy()
@@ -50,7 +50,7 @@ class GLWidget(QOpenGLWidget):
         self.light_intensity = 20.0
 
         self.to_render = []
-        self.to_update = None
+        self.to_update = []
 
     def set_perspective_fov(self, fovy, aspect, z_near, z_far):
         tan_half_fovy = tan(radians(fovy) / 2)
@@ -108,7 +108,7 @@ class GLWidget(QOpenGLWidget):
 
         if self.to_update:
             self.update_buffers()
-            self.to_update = None
+            self.to_update = []
 
         for data, indices, offset, model_matrix, color in self.to_render:
             try:
@@ -198,7 +198,7 @@ class GLWidget(QOpenGLWidget):
         if self.orthographic:
             ar = self.width / self.height
             s = self.r / 100
-            self.set_ortho(ar * s, s, -10, 10)
+            self.set_ortho(ar * s, s, -100, 100)
         else:
             self.set_perspective_fov(np.clip(self.fov, 1, 179), self.width / self.height, 0.1, 100)
         self.update()

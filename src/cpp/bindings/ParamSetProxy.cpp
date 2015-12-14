@@ -18,16 +18,19 @@ void ParamSetProxy::AddFloat(const std::string& name, std::vector<Float> values)
   paramSet->AddFloat(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddInt(const std::string& name, std::vector<int> values) {
   ArrayView<int>* arrayView = new ArrayView<int>(values);
   paramSet->AddInt(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddBool(const std::string& name, std::vector<bool> values) {
   ArrayView<bool>* arrayView = new ArrayView<bool>(values);
   paramSet->AddBool(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddPoint2f(const std::string& name, std::vector<Float> values) {
   std::vector<Point2f> v;
   for (size_t i = 0; i < values.size() - 1; i+=2) {
@@ -37,6 +40,7 @@ void ParamSetProxy::AddPoint2f(const std::string& name, std::vector<Float> value
   paramSet->AddPoint2f(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddVector2f(const std::string& name, std::vector<Float> values) {
   std::vector<Vector2f> v;
   for (size_t i = 0; i < values.size() - 1; i+=2) {
@@ -46,6 +50,7 @@ void ParamSetProxy::AddVector2f(const std::string& name, std::vector<Float> valu
   paramSet->AddVector2f(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddPoint3f(const std::string& name, std::vector<Float> values) {
   std::vector<Point3f> v;
   for (size_t i = 0; i < values.size() - 2; i+=3) {
@@ -55,6 +60,7 @@ void ParamSetProxy::AddPoint3f(const std::string& name, std::vector<Float> value
   paramSet->AddPoint3f(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddVector3f(const std::string& name, std::vector<Float> values) {
   std::vector<Vector3f> v;
   for (size_t i = 0; i < values.size() - 2; i+=3) {
@@ -64,6 +70,7 @@ void ParamSetProxy::AddVector3f(const std::string& name, std::vector<Float> valu
   paramSet->AddVector3f(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddNormal3f(const std::string& name, std::vector<Float> values) {
   std::vector<Normal3f> v;
   for (size_t i = 0; i < values.size() - 2; i+=3) {
@@ -73,11 +80,19 @@ void ParamSetProxy::AddNormal3f(const std::string& name, std::vector<Float> valu
   paramSet->AddNormal3f(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
+void ParamSetProxy::AddRGBSpectrum(const std::string& name, std::vector<Float> values) {
+  ArrayView<Float>* arrayView = new ArrayView<Float>(values);
+  paramSet->AddRGBSpectrum(name, std::move(arrayView->v), arrayView->size);
+  delete arrayView;
+}
+
 void ParamSetProxy::AddString(const std::string& name, std::vector<std::string> values) {
   ArrayView<std::string>* arrayView = new ArrayView<std::string>(values);
   paramSet->AddString(name, std::move(arrayView->v), arrayView->size);
   delete arrayView;
 }
+
 void ParamSetProxy::AddTexture(const std::string& name, const std::string& texture) {
   paramSet->AddTexture(name, texture);
 }

@@ -15,3 +15,7 @@ target_link_libraries(bindings ${PYTHON_LIBRARIES} ${pbrt} ${OPENEXR_LIBS})
 add_custom_target(install_bindings
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/bindings.dll ${CMAKE_CURRENT_SOURCE_DIR}/../../python/pbrt.pyd
 )
+
+add_custom_target(install_exr_converter
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_INSTALL_PREFIX}/bin/hdrtoldr.exe ${CMAKE_CURRENT_SOURCE_DIR}/../../python/hdrtoldr.exe
+)

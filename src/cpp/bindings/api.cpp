@@ -29,6 +29,10 @@ void Init(int nThreads,
   pbrtInit(options);
 }
 
+void FlushSTDOUT() {
+  fflush(stdout);
+}
+
 void ConcatTransform(vector<Float> transform) {
   if (transform.size() != 16) {
     Error("Expected a list of size 16");
@@ -108,6 +112,7 @@ PYBIND11_PLUGIN(pbrt) {
       .def("AddPoint3f", &ParamSetProxy::AddPoint3f, "Input: float array x1 y1 z1, x2 y2 z2 ...")
       .def("AddVector3f", &ParamSetProxy::AddVector3f, "Input: float array x1 y1 z1, x2 y2 z2 ...")
       .def("AddNormal3f", &ParamSetProxy::AddNormal3f, "Input: float array x1 y1 z1, x2 y2 z2 ...")
+      .def("AddRGBSpectrum", &ParamSetProxy::AddRGBSpectrum, "Input: float array r1 g1 b1 r2 g2 b2 ...")
       .def("AddString", &ParamSetProxy::AddString)
       .def("AddTexture", &ParamSetProxy::AddTexture);
 
@@ -158,5 +163,6 @@ PYBIND11_PLUGIN(pbrt) {
   m.def("ObjectInstance", &pbrtObjectInstance);
 
   m.def("WorldEnd", &pbrtWorldEnd);
+  m.def("flush_STDOUT", &FlushSTDOUT);
   return m.ptr();
 }

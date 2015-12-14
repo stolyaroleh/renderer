@@ -5,7 +5,7 @@ from ui.scene_view import SceneViewWidget
 from core.scene import SceneDescription
 
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QWidget
 
 
 class MainWindow(Ui_MainWindow):
@@ -23,10 +23,15 @@ class MainWindow(Ui_MainWindow):
                                          QColor(255, 0, 0))
 
         self.scene = SceneDescription()
-        self.scene_view = SceneViewWidget(self.parent, self.scene)
+        self.scene_view = SceneViewWidget(self.parent, self, self.scene)
+        self.render_view_widget = QWidget()
+        self.render_view = RenderViewWidget(self.render_view_widget)
 
     def initialize(self):
         self.gridLayout.addWidget(self.scene_view)
+        self.gridLayout.addWidget(self.render_view_widget)
+
+        self.render_view.setupUi(self.render_view_widget)
 
         self.console.setupUi(self.console_dock_contents)
         self.console.initialize()
@@ -49,7 +54,7 @@ class MainWindow(Ui_MainWindow):
         self.console_dock.setVisible(self.action_console.isChecked())
 
     def toggle_render_view(self):
-        # self.render_view_widget.setVisible(self.action_render_view.isChecked())
+        self.render_view_widget.setVisible(self.action_render_view.isChecked())
         pass
 
     def toggle_scene_view(self):
@@ -72,6 +77,9 @@ class MainWindow(Ui_MainWindow):
         self.scene.import_mesh(filename)
         self.scene_view.update_list()
         self.scene_view.refresh()
+
+    def load_png(self, filename):
+        self.render_view.show(filename)
 
     def close(self):
         self.parent.close()

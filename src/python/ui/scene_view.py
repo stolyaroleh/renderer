@@ -2,11 +2,13 @@ from ui.gl_widget import GLWidget
 from ui_generated.scene_view_ui import Ui_SceneViewWidget
 from PyQt5 import QtWidgets
 
+from core.pbrt_export import render
 
 class SceneViewWidget(QtWidgets.QWidget):
-    def __init__(self, parent, scene):
+    def __init__(self, parent, main_window, scene):
         super().__init__(parent)
         self.parent = parent
+        self.main_window = main_window
 
         self.ui = Ui_SceneViewWidget()
         self.ui.setupUi(self)
@@ -30,7 +32,7 @@ class SceneViewWidget(QtWidgets.QWidget):
         self.ui.intensity.valueChanged.connect(self.update_light)
 
         self.ui.meshes_list.itemClicked.connect(self.update_transform_fields)
-        self.ui.delete_btn.clicked.connect(self.delete_mesh)
+        self.ui.render_btn.clicked.connect(self.render)
 
         self.update_light()
 
@@ -92,6 +94,13 @@ class SceneViewWidget(QtWidgets.QWidget):
         self.update_light()
         self.update_list()
         self.gl_widget.update()
+
+    def render(self):
+        light_pos = self.gl_widget.light_pos
+        intensity = self.gl_widget.light_intensity
+        filename = self.ui.filename.text() or 'output'
+        render(filename, (self.gl_widget.width, self.gl_widget.height), self.scene.meshes, light_pos, intensity)
+        self.main_window.load_png(filename + '.png')
 
 
 if __name__ == '__main__':

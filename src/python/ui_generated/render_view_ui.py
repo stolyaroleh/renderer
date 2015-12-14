@@ -19,9 +19,9 @@ class Ui_RenderViewWidget(object):
         self.groupBox.setObjectName("groupBox")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.gl_widget = QtWidgets.QOpenGLWidget(self.groupBox)
-        self.gl_widget.setObjectName("gl_widget")
-        self.gridLayout_2.addWidget(self.gl_widget, 0, 0, 1, 1)
+        self.image = QtWidgets.QLabel(self.groupBox)
+        self.image.setObjectName("image")
+        self.gridLayout_2.addWidget(self.image, 0, 0, 1, 1, QtCore.Qt.AlignRight|QtCore.Qt.AlignVCenter)
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
 
         self.retranslateUi(RenderViewWidget)
@@ -31,6 +31,7 @@ class Ui_RenderViewWidget(object):
         _translate = QtCore.QCoreApplication.translate
         RenderViewWidget.setWindowTitle(_translate("RenderViewWidget", "Form"))
         self.groupBox.setTitle(_translate("RenderViewWidget", "Render View"))
+        self.image.setText(_translate("RenderViewWidget", "Image not loaded"))
 
 
 if __name__ == "__main__":
